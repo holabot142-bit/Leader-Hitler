@@ -7,11 +7,25 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
         body { background: #05050a; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; color: #fff; }
-        #gameContainer { position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        
+        /* 🛠️ تعديل حاوية اللعبة لترحيل شاشة اللعب (الـ Canvas) لأعلى الشاشة قليلاً */
+        #gameContainer { 
+            position: relative; 
+            width: 100vw; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start; /* غيّرنا السنتر لتبدأ اللعبة من الأعلى */
+            padding-top: 30px; /* مسافة أمان صغيرة من السقف */
+        }
+        
         canvas { background: #0c0c14; display: block; border: 2px solid #00f3ff; box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); }
-        #hud { position: absolute; top: 15px; width: 90%; display: flex; justify-content: space-between; pointer-events: none; z-index: 5; }
+        
+        /* ضبط الـ HUD ليتماشى مع رفع الشاشة */
+        #hud { position: absolute; top: 40px; width: 90%; display: flex; justify-content: space-between; pointer-events: none; z-index: 5; }
         .hud-box { background: rgba(10, 10, 20, 0.85); padding: 10px 15px; border-radius: 8px; border: 1px solid #00f3ff; font-weight: bold; font-size: 14px; text-shadow: 0 0 5px #00f3ff; }
         #missionObjective { color: #ff0055; border-color: #ff0055; text-shadow: 0 0 5px #ff0055; }
+        
         .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 10, 0.95); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; padding: 25px; text-align: center; }
         h1 { font-size: 32px; color: #00f3ff; margin-bottom: 15px; text-shadow: 0 0 10px #00f3ff; letter-spacing: 2px; }
         p { font-size: 16px; margin-bottom: 25px; line-height: 1.6; max-width: 300px; }
@@ -19,10 +33,10 @@
         .start-btn:active { transform: scale(0.95); box-shadow: 0 0 5px #00f3ff; }
         .hidden { display: none !important; }
         
-        /* 🛠️ تم تعديل الارتفاع لرفع الأزرار فوق مستوى شخصية هتلر والخط الأرضي */
+        /* 🎮 إرجاع الأزرار لمكانها الطبيعي والمريح ليد اللاعب في الأسفل */
         #controls { 
             position: absolute; 
-            bottom: 235px; /* الارتفاع الفخم والمناسب لتجنب حجب عناصر اللعب */
+            bottom: 50px; /* مكان مريح جداً للإبهام أسفل الشاشة */
             width: 94%; 
             display: flex; 
             justify-content: space-between; 
@@ -33,7 +47,7 @@
         .btn { 
             width: 70px; 
             height: 70px; 
-            background: rgba(0, 0, 0, 0.6); /* تعتيم الخلفية قليلاً لبروز النيون */
+            background: rgba(0, 0, 0, 0.6); 
             border: 2px solid rgba(0, 243, 255, 0.5); 
             border-radius: 50%; 
             color: #00f3ff; 
