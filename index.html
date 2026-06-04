@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Leader Hitler</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
+        body { background: #05050a; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; color: #fff; }
+        #gameContainer { position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        canvas { background: #0c0c14; display: block; border: 2px solid #00f3ff; box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); }
+        #hud { position: absolute; top: 15px; width: 90%; display: flex; justify-content: space-between; pointer-events: none; z-index: 5; }
+        .hud-box { background: rgba(10, 10, 20, 0.85); padding: 10px 15px; border-radius: 8px; border: 1px solid #00f3ff; font-weight: bold; font-size: 14px; text-shadow: 0 0 5px #00f3ff; }
+        #missionObjective { color: #ff0055; border-color: #ff0055; text-shadow: 0 0 5px #ff0055; }
+        .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 5, 10, 0.95); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; padding: 25px; text-align: center; }
+        h1 { font-size: 32px; color: #00f3ff; margin-bottom: 15px; text-shadow: 0 0 10px #00f3ff; letter-spacing: 2px; }
+        p { font-size: 16px; margin-bottom: 25px; line-height: 1.6; max-width: 300px; }
+        .start-btn { padding: 15px 40px; background: #00f3ff; color: #000; font-weight: bold; font-size: 16px; border-radius: 30px; cursor: pointer; border: none; box-shadow: 0 0 15px #00f3ff; transition: 0.2s; }
+        .start-btn:active { transform: scale(0.95); box-shadow: 0 0 5px #00f3ff; }
+        .hidden { display: none !important; }
+        
+        /* أزرار الموبايل الاحترافية الشفافة */
+        #controls { position: absolute; bottom: 25px; width: 90%; display: flex; justify-content: space-between; pointer-events: none; z-index: 5; }
+        .btn-group { display: flex; gap: 15px; pointer-events: auto; }
+        .btn { width: 65px; height: 65px; background: rgba(255, 255, 255, 0.07); border: 2px solid rgba(255, 255, 255, 0.25); border-radius: 50%; color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 20px; transition: 0.1s; }
+        .btn:active { background: rgba(0, 243, 255, 0.3); border-color: #00f3ff; transform: scale(0.9); }
+        .action-btn { width: 85px; border-radius: 15px; font-size: 12px; letter-spacing: 1px; }
+        #btnCommand { border-color: rgba(255, 0, 85, 0.4); color: #ff0055; }
+        #btnCommand:active { background: rgba(255, 0, 85, 0.3); border-color: #ff0055; }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="startScreen" class="screen">
+            <h1>LEADER HITLER</h1>
+            <p>تحدي الأساطير الحتمي! قفل الـ 3 مراحل واشحن 50 جوهرة فري فاير فوراً! (لأول 3 فائزين فقط) 💎🔥</p>
+            <button class="start-btn" onclick="startGame()">ابدأ التحدي 🚀</button>
+        </div>
+        
+        <div id="winScreen" class="screen hidden">
+            <h1 style="color: #39ff14; text-shadow: 0 0 10px #39ff14;">مهمة ناجحة!</h1>
+            <p id="winMessage" style="font-size: 15px;"></p>
+            <button class="start-btn" style="background: #39ff14; box-shadow: 0 0 15px #39ff14;" onclick="nextMission()">المرحلة التالية ◀</button>
+        </div>
+        
+        <div id="hud">
+            <div class="hud-box" id="eraName">Leader Hitler</div>
+            <div class="hud-box" id="missionObjective">الهدف: 0/500m</div>
+        </div>
+        
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="controls">
+            <div class="btn-group">
+                <div class="btn" id="btnLeft">◀</div>
+                <div class="btn" id="btnRight">▶</div>
+            </div>
+            <div class="btn-group">
+                <div class="btn action-btn" id="btnJump">JUMP</div>
+                <div class="btn action-btn" id="btnCommand">COMMAND</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>
