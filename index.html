@@ -18,60 +18,77 @@
         .start-btn { padding: 15px 40px; background: #00f3ff; color: #000; font-weight: bold; font-size: 16px; border-radius: 30px; cursor: pointer; border: none; box-shadow: 0 0 15px #00f3ff; transition: 0.2s; }
         .start-btn:active { transform: scale(0.95); box-shadow: 0 0 5px #00f3ff; }
         .hidden { display: none !important; }
-        
-        /* تعديل الأزرار المرفوعة لتفادي شريط المتصفح السفلي للموبايل */
         #controls { 
             position: absolute; 
-            bottom: 85px; 
-            width: 90%; 
+            bottom: 140px; 
+            width: 94%; 
             display: flex; 
             justify-content: space-between; 
             pointer-events: none; 
             z-index: 5; 
         }
-        .btn-group { display: flex; gap: 15px; pointer-events: auto; }
-        .btn { width: 65px; height: 65px; background: rgba(255, 255, 255, 0.07); border: 2px solid rgba(255, 255, 255, 0.25); border-radius: 50%; color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 20px; transition: 0.1s; }
-        .btn:active { background: rgba(0, 243, 255, 0.3); border-color: #00f3ff; transform: scale(0.9); }
-        .action-btn { width: 85px; border-radius: 15px; font-size: 12px; letter-spacing: 1px; }
-        #btnCommand { border-color: rgba(255, 0, 85, 0.4); color: #ff0055; }
-        #btnCommand:active { background: rgba(255, 0, 85, 0.3); border-color: #ff0055; }
+        .btn-group { display: flex; gap: 20px; pointer-events: auto; }
+        .btn { 
+            width: 70px; 
+            height: 70px; 
+            background: rgba(255, 255, 255, 0.08); 
+            border: 2px solid rgba(0, 243, 255, 0.4); 
+            border-radius: 50%; 
+            color: #00f3ff; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-weight: bold; 
+            font-size: 22px; 
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
+            transition: 0.1s; 
+        }
+        .btn:active { 
+            background: rgba(0, 243, 255, 0.25); 
+            border-color: #00f3ff; 
+            transform: scale(0.88); 
+            box-shadow: 0 0 15px #00f3ff;
+        }
+        #btnCommand { 
+            border-color: rgba(255, 0, 85, 0.5); 
+            color: #ff0055; 
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.1);
+        }
+        #btnCommand:active { 
+            background: rgba(255, 0, 85, 0.25); 
+            border-color: #ff0055; 
+            box-shadow: 0 0 15px #ff0055;
+        }
     </style>
 </head>
 <body>
     <div id="gameContainer">
-        
         <div id="startScreen" class="screen">
             <h1>LEADER HITLER</h1>
             <p>تحدي الأساطير الحتمي! قفل الـ 3 مراحل واشحن 50 جوهرة فري فاير فوراً! (لأول 3 فائزين فقط) 💎🔥</p>
             <button class="start-btn" onclick="startGame()">ابدأ التحدي 🚀</button>
         </div>
-        
         <div id="winScreen" class="screen hidden">
             <h1 style="color: #39ff14; text-shadow: 0 0 10px #39ff14;">مهمة ناجحة!</h1>
             <p id="winMessage" style="font-size: 15px;"></p>
             <button class="start-btn" style="background: #39ff14; box-shadow: 0 0 15px #39ff14;" onclick="nextMission()">المرحلة التالية ◀</button>
         </div>
-        
         <div id="hud">
             <div class="hud-box" id="eraName">Leader Hitler</div>
             <div class="hud-box" id="missionObjective">الهدف: 0/500m</div>
         </div>
-        
         <canvas id="gameCanvas"></canvas>
-        
         <div id="controls">
             <div class="btn-group">
                 <div class="btn" id="btnLeft">◀</div>
                 <div class="btn" id="btnRight">▶</div>
             </div>
             <div class="btn-group">
-                <div class="btn action-btn" id="btnJump">JUMP</div>
-                <div class="btn action-btn" id="btnCommand">COMMAND</div>
+                <div class="btn" id="btnJump">JUMP</div>
+                <div class="btn" id="btnCommand">CMD</div>
             </div>
         </div>
-
     </div>
-    
     <script src="game.js"></script>
 </body>
 </html>
