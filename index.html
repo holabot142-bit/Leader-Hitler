@@ -19,8 +19,16 @@
         .start-btn:active { transform: scale(0.95); box-shadow: 0 0 5px #00f3ff; }
         .hidden { display: none !important; }
         
-        /* أزرار الموبايل الاحترافية الشفافة */
-        #controls { position: absolute; bottom: 25px; width: 90%; display: flex; justify-content: space-between; pointer-events: none; z-index: 5; }
+        /* تعديل الأزرار المرفوعة لتفادي شريط المتصفح السفلي للموبايل */
+        #controls { 
+            position: absolute; 
+            bottom: 85px; 
+            width: 90%; 
+            display: flex; 
+            justify-content: space-between; 
+            pointer-events: none; 
+            z-index: 5; 
+        }
         .btn-group { display: flex; gap: 15px; pointer-events: auto; }
         .btn { width: 65px; height: 65px; background: rgba(255, 255, 255, 0.07); border: 2px solid rgba(255, 255, 255, 0.25); border-radius: 50%; color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 20px; transition: 0.1s; }
         .btn:active { background: rgba(0, 243, 255, 0.3); border-color: #00f3ff; transform: scale(0.9); }
@@ -31,6 +39,7 @@
 </head>
 <body>
     <div id="gameContainer">
+        
         <div id="startScreen" class="screen">
             <h1>LEADER HITLER</h1>
             <p>تحدي الأساطير الحتمي! قفل الـ 3 مراحل واشحن 50 جوهرة فري فاير فوراً! (لأول 3 فائزين فقط) 💎🔥</p>
@@ -60,6 +69,7 @@
                 <div class="btn action-btn" id="btnCommand">COMMAND</div>
             </div>
         </div>
+
     </div>
     
     <script src="game.js"></script>
