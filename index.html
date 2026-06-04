@@ -8,21 +8,21 @@
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
         body { background: #05050a; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; color: #fff; }
         
-        /* 🛠️ تعديل حاوية اللعبة لترحيل شاشة اللعب (الـ Canvas) لأعلى الشاشة قليلاً */
+        /* 🚀 تم رفع شاشة اللعب (الـ Canvas) لأعلى نقطة ممكنة لتلبية طلب أحمد بالملي */
         #gameContainer { 
             position: relative; 
             width: 100vw; 
             height: 100vh; 
             display: flex; 
             justify-content: center; 
-            align-items: flex-start; /* غيّرنا السنتر لتبدأ اللعبة من الأعلى */
-            padding-top: 30px; /* مسافة أمان صغيرة من السقف */
+            align-items: flex-start; 
+            padding-top: 10px; /* تقليل المسافة لرفع اللعبة 5 حبات إضافية لأعلى */
         }
         
         canvas { background: #0c0c14; display: block; border: 2px solid #00f3ff; box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); }
         
-        /* ضبط الـ HUD ليتماشى مع رفع الشاشة */
-        #hud { position: absolute; top: 40px; width: 90%; display: flex; justify-content: space-between; pointer-events: none; z-index: 5; }
+        /* ضبط الـ HUD مع الارتفاع الأقصى الجديد */
+        #hud { position: absolute; top: 20px; width: 90%; display: flex; justify-content: space-between; pointer-events: none; z-index: 5; }
         .hud-box { background: rgba(10, 10, 20, 0.85); padding: 10px 15px; border-radius: 8px; border: 1px solid #00f3ff; font-weight: bold; font-size: 14px; text-shadow: 0 0 5px #00f3ff; }
         #missionObjective { color: #ff0055; border-color: #ff0055; text-shadow: 0 0 5px #ff0055; }
         
@@ -33,10 +33,10 @@
         .start-btn:active { transform: scale(0.95); box-shadow: 0 0 5px #00f3ff; }
         .hidden { display: none !important; }
         
-        /* 🎮 إرجاع الأزرار لمكانها الطبيعي والمريح ليد اللاعب في الأسفل */
+        /* 🎮 ضبط مكان الأزرار السفلي لتكون مريحة جداً ومثالية للعب */
         #controls { 
             position: absolute; 
-            bottom: 50px; /* مكان مريح جداً للإبهام أسفل الشاشة */
+            bottom: 45px; 
             width: 94%; 
             display: flex; 
             justify-content: space-between; 
