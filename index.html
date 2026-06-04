@@ -8,21 +8,21 @@
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
         body { background: #05050a; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; color: #fff; }
         
-        /* 🛠️ تم رفع شاشة اللعب (الـ Canvas) لأعلى بـ 5 حبات إضافية */
+        /* 🛠️ ضبط الحاوية لتوزيع الشاشة والأزرار بشكل متناسق ومريح للعين واليد */
         #gameContainer { 
             position: relative; 
             width: 100vw; 
             height: 100vh; 
             display: flex; 
             justify-content: center; 
-            align-items: flex-start; 
-            padding-top: 10px; /* مسافة مرتفعة ومثالية جداً للسقف */
+            align-items: center; /* إعادة التوسيط العمودي لترك مساحة كافية تحت الطريق */
+            padding-bottom: 60px; /* دفع الشاشة للأعلى قليلاً لتوفير مساحة للأزرار */
         }
         
         canvas { background: #0c0c14; display: block; border: 2px solid #00f3ff; box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); }
         
-        /* ضبط موقع الـ HUD ليتناسب مع الارتفاع الجديد للشاشة */
-        #hud { position: absolute; top: 20px; width: 90%; display: flex; justify-content: space-between; pointer-events: none; z-index: 5; }
+        /* ضبط موقع الـ HUD ليكون متناسقاً في الأعلى */
+        #hud { position: absolute; top: 15px; width: 90%; display: flex; justify-content: space-between; pointer-events: none; z-index: 5; }
         .hud-box { background: rgba(10, 10, 20, 0.85); padding: 10px 15px; border-radius: 8px; border: 1px solid #00f3ff; font-weight: bold; font-size: 14px; text-shadow: 0 0 5px #00f3ff; }
         #missionObjective { color: #ff0055; border-color: #ff0055; text-shadow: 0 0 5px #ff0055; }
         
@@ -33,10 +33,10 @@
         .start-btn:active { transform: scale(0.95); box-shadow: 0 0 5px #00f3ff; }
         .hidden { display: none !important; }
         
-        /* 🎮 المكان الاستراتيجي والمثالي للأزرار لتوفير أقصى راحة وحرية حركة أثناء اللعب */
+        /* 🎮 الأزرار أصبحت "تحت الطريق" ومرفوعة عن أزرار الأندرويد السفلية لتوفير راحة تامة */
         #controls { 
             position: absolute; 
-            bottom: 35px; /* النقطة السحرية لراحة إبهام اللاعب */
+            bottom: 85px; /* رفع الأزرار عن حافة الشاشة السفلية لتكون تحت خط الطريق بالظبط */
             width: 94%; 
             display: flex; 
             justify-content: space-between; 
@@ -47,8 +47,8 @@
         .btn { 
             width: 70px; 
             height: 70px; 
-            background: rgba(0, 0, 0, 0.65); 
-            border: 2px solid rgba(0, 243, 255, 0.5); 
+            background: rgba(0, 0, 0, 0.7); 
+            border: 2px solid rgba(0, 243, 255, 0.6); 
             border-radius: 50%; 
             color: #00f3ff; 
             display: flex; 
@@ -56,7 +56,7 @@
             align-items: center; 
             font-weight: bold; 
             font-size: 22px; 
-            box-shadow: 0 0 12px rgba(0, 243, 255, 0.2);
+            box-shadow: 0 0 12px rgba(0, 243, 255, 0.3);
             transition: 0.1s; 
         }
         .btn:active { 
@@ -66,9 +66,9 @@
             box-shadow: 0 0 15px #00f3ff;
         }
         #btnCommand { 
-            border-color: rgba(255, 0, 85, 0.6); 
+            border-color: rgba(255, 0, 85, 0.7); 
             color: #ff0055; 
-            box-shadow: 0 0 12px rgba(255, 0, 85, 0.2);
+            box-shadow: 0 0 12px rgba(255, 0, 85, 0.3);
         }
         #btnCommand:active { 
             background: rgba(255, 0, 85, 0.3); 
