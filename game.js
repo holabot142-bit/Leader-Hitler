@@ -1,12 +1,18 @@
 /**
- * 👑 LEADER HITLER - OFFICIAL GAME ENGINE (ANTI-FRAUD EDITION)
- * 🎮 المطورة خصيصاً لتحدي الـ 50 جوهرة الفخم لأول 3 فائزين
+ * 👑 LEADER HITLER - OFFICIAL MASTER GAME ENGINE v1.2
+ * 🚀 POWERED BY FB-13 CLOSED SOURCE INFRASTRUCTURE
+ * 🎮 ANTI-CHEAT, ANTI-FRAUD & MOBILE OPTIMIZED LAYER
+ * * تم التطوير والضبط الشامل للمسافات والانسيابية بناءً على تجارب الكوينشية
  */
+
+// =========================================================================
+// 1. إعدادات البيئة الأساسية والكانفاس الديناميكي المتجاوب
+// =========================================================================
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
-// إعدادات الشاشة المتجاوبة الفخمة مع تثبيت العرض للموبايل
+// إعدادات الشاشة المتجاوبة الفخمة مع تثبيت العرض للموبايل لتفادي تمدد العناصر
 function resizeCanvas() {
     canvas.width = window.innerWidth > 480 ? 420 : window.innerWidth;
     canvas.height = window.innerHeight;
@@ -14,11 +20,14 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
-// تحميل الـ Sprite Sheet الرسمية للقائد
+// تحميل الـ Sprite Sheet الرسمية الفخمة للقائد
 const spriteSheet = new Image();
 spriteSheet.src = 'hitler_sprites.png'; 
 
-// مصفوفة المهمات الفخمة ذات الأهداف والصعوبات المحددة بالتفصيل
+// =========================================================================
+// 2. مصفوفة المهمات التاريخية الكبرى وأهداف العصور
+// =========================================================================
+
 const missions = [
     { 
         name: "برلين 1945: الهروب من الحصار", 
@@ -46,19 +55,26 @@ const missions = [
     }
 ];
 
-// المتغيرات الحركية والبيئية لإدارة اللعبة
+// =========================================================================
+// 3. إدارة متغيرات الحالة الكونية للعبة (Global Game States)
+// =========================================================================
+
 let currentMissionIndex = 0;
 let gameState = "START"; 
 let distanceCount = 0;
 let obstacles = [];
 let lasers = [];
-let particles = []; // نظام جزيئات نيون فخم للخلفية والحركة
-let screenShake = 0; // نظام اهتزاز الشاشة السينمائي عند الاصطدام
+let particles = [];     // نظام جزيئات نيون فخم للخلفية والحركة الديناميكية
+let screenShake = 0;    // نظام اهتزاز الشاشة السينمائي عند الاصطدامات القوية
+let globalGameTick = 0; // عداد التيك العالمي لإدارة العمليات المتزامنة
 
-// كتل التحكم باللمس والحركة
+// كتل التحكم باللمس والحركة للأصابع
 let keys = { left: false, right: false };
 
-// كائن القائد الفخم مع إحداثيات التقطيع الدقيقة
+// =========================================================================
+// 4. كائن القائد الفخم (The Player Logic Structure)
+// =========================================================================
+
 const player = {
     x: 60,
     y: 0,
@@ -70,14 +86,23 @@ const player = {
     isCommanding: false,
     commandTimer: 0,
     
-    // إدارة الـ Sprite Sheet (صفين و 6 أعمدة)
+    // إدارة الـ Sprite Sheet المتقدمة (صفين و 6 أعمدة بصرية)
     frameX: 0,
     frameY: 0,
     tick: 0,
     animationSpeed: 5
 };
 
-// --- نظام جزيئات الغبار النيوني الفخم في الخلفية ---
+// =========================================================================
+// 5. نظام الجزيئات السينمائي والمؤثرات النيونية (Neon Particle System)
+// =========================================================================
+
+/**
+ * دالة توليد الجزيئات في الفضاء الديناميكي
+ * @param {number} x - الإحداثي السيني
+ * @param {number} y - الإحداثي الصادي
+ * @param {string} color - لون الجسيم النيوني
+ */
 function createParticle(x, y, color) {
     return {
         x: x,
@@ -90,51 +115,106 @@ function createParticle(x, y, color) {
     };
 }
 
+/**
+ * تهيئة وتوليد جزيئات غبار الخلفية بشكل عشوائي مدروس
+ */
 function initBackgroundParticles() {
-    if (particles.length < 40 && Math.random() < 0.3) {
+    if (particles.length < 50 && Math.random() < 0.3) {
         let activeMission = missions[currentMissionIndex];
-        particles.push(createParticle(canvas.width, Math.random() * (canvas.height - 150), activeMission.obstacle));
+        particles.push(
+            createParticle(
+                canvas.width, 
+                Math.random() * (canvas.height - 150), 
+                activeMission.obstacle
+            )
+        );
     }
 }
 
-// --- دالة توليد مفتاح التحقق الأمني الغريب والمشفر (API-Key Style) ---
+/**
+ * تحديث دورة حياة الجزيئات وتلاشيها تدريجياً
+ */
+function updateParticles() {
+    for (let p = particles.length - 1; p >= 0; p--) {
+        particles[p].x += particles[p].speedX;
+        particles[p].y += particles[p].speedY;
+        particles[p].alpha -= 0.01;
+        
+        // إزالة الجسيم إذا تلاشت شفافيته أو خرج عن الشاشة
+        if (particles[p].alpha <= 0 || particles[p].x < 0) {
+            particles.splice(p, 1);
+        }
+    }
+}
+
+// =========================================================================
+// 6. جدار الأمان الأمنية - توليد مفتاح التحقق الفريد (Anti-Cheat Validation)
+// =========================================================================
+
+/**
+ * دالة توليد مفتاح التحقق الأمني الديناميكي لمنع الغش وسرقة لقطات الشاشة
+ */
 function generateUniqueWinKey() {
-    // توليد جزء عشوائي مكون من حروف وأرقام غريبة
     const chars = 'abcdef0123456789lhx';
     let randomPart = '';
+    
+    // توليد سلسلة عشوائية مشفرة
     for (let i = 0; i < 6; i++) {
         randomPart += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    // دمج وقت الفوز بالمللي ثانية الحالي لضمان عدم التكرار نهائياً
+    
+    // دمج بصمة الوقت بالمللي ثانية لضمان عدم تكرار المفتاح نهائياً بين اللاعبين
     const timestampPart = Date.now().toString().slice(-6);
     
-    // إخراج المفتاح بشكل غريب ومحترف كأنه كود برامجي مشفر
     return `LH_API_v1_${randomPart}_TS${timestampPart}`;
 }
 
-// --- ربط أزرار اللمس على الموبايل بالـ Logic الحركي السلس ---
-document.getElementById('btnLeft').addEventListener('touchstart', (e) => { e.preventDefault(); keys.left = true; });
-document.getElementById('btnLeft').addEventListener('touchend', (e) => { e.preventDefault(); keys.left = false; });
-document.getElementById('btnRight').addEventListener('touchstart', (e) => { e.preventDefault(); keys.right = true; });
-document.getElementById('btnRight').addEventListener('touchend', (e) => { e.preventDefault(); keys.right = false; });
+// =========================================================================
+// 7. معالجة أحداث اللمس والحركة على الموبايل (Mobile Input Systems)
+// =========================================================================
 
+// مستمعات الحركة لزر اليسار
+document.getElementById('btnLeft').addEventListener('touchstart', (e) => { 
+    e.preventDefault(); 
+    keys.left = true; 
+});
+document.getElementById('btnLeft').addEventListener('touchend', (e) => { 
+    e.preventDefault(); 
+    keys.left = false; 
+});
+
+// مستمعات الحركة لزر اليمين
+document.getElementById('btnRight').addEventListener('touchstart', (e) => { 
+    e.preventDefault(); 
+    keys.right = true; 
+});
+document.getElementById('btnRight').addEventListener('touchend', (e) => { 
+    e.preventDefault(); 
+    keys.right = false; 
+});
+
+// مستمع الحركة لزر القفز الاحترافي
 document.getElementById('btnJump').addEventListener('touchstart', (e) => {
     e.preventDefault();
     if (!player.isJumping && gameState === "PLAYING") {
-        player.vY = -13.5;
+        player.vY = -13.5; // قوة الدفع العمودي للأعلى
         player.isJumping = true;
-        for(let i=0; i<8; i++) {
-            particles.push(createParticle(player.x + player.width/2, player.y + player.height, '#ffffff'));
+        
+        // توليد تأثير غبار الانطلاق عند القفز
+        for(let i = 0; i < 8; i++) {
+            particles.push(createParticle(player.x + player.width / 2, player.y + player.height, '#ffffff'));
         }
     }
 });
 
+// مستمع الحركة لزر الهجوم والقيادة العسكرية
 document.getElementById('btnCommand').addEventListener('touchstart', (e) => {
     e.preventDefault();
     if (!player.isCommanding && gameState === "PLAYING") {
         player.isCommanding = true;
-        player.commandTimer = 15; 
+        player.commandTimer = 15; // عدد التيكات لحالة الهجوم
         
+        // توليد شعاع ليزر من موقع القائد
         lasers.push({
             x: player.x + player.width - 15,
             y: player.y + 35,
@@ -145,7 +225,13 @@ document.getElementById('btnCommand').addEventListener('touchstart', (e) => {
     }
 });
 
-// --- إدارة حالات اللعبة ---
+// =========================================================================
+// 8. إدارة دورات وحالات النظام والخرائط (Mission State Managers)
+// =========================================================================
+
+/**
+ * تشغيل وإطلاق اللعبة وتصفير العدادات العامة
+ */
 function startGame() {
     document.getElementById('startScreen').classList.add('hidden');
     document.getElementById('winScreen').classList.add('hidden');
@@ -155,6 +241,9 @@ function startGame() {
 }
 window.startGame = startGame;
 
+/**
+ * إعادة تعيين إحداثيات المستوى الحالي لضمان نظافة الذاكرة الرندرية
+ */
 function resetLevel() {
     obstacles = [];
     lasers = [];
@@ -164,9 +253,14 @@ function resetLevel() {
     player.vY = 0;
     player.isJumping = false;
     player.isCommanding = false;
-    document.getElementById('eraName').innerText = "Leader Hitler";
+    
+    let activeMission = missions[currentMissionIndex];
+    document.getElementById('eraName').innerText = activeMission.name;
 }
 
+/**
+ * الانتقال السلس للمهمة والعصر التاريخي التالي
+ */
 function nextMission() {
     currentMissionIndex = (currentMissionIndex + 1) % missions.length;
     document.getElementById('winScreen').classList.add('hidden');
@@ -175,15 +269,17 @@ function nextMission() {
 }
 window.nextMission = nextMission;
 
+/**
+ * إطلاق واجهة الفوز والتأكيد الأمني عند الوصول للهدف الحتمي
+ */
 function triggerMissionWin() {
     gameState = "WIN_SCREEN";
     document.getElementById('winScreen').classList.remove('hidden');
     
+    // التحقق إذا كان العصر الحالي هو العصر الأخير (المستقبل) لتوليد الجدار الناري للفوز
     if (currentMissionIndex === missions.length - 1) {
-        // توليد الرمز الأمني الفريد للفائز الحالي لمنع التزوير وسرقة الصور
         const uniqueKey = generateUniqueWinKey();
         
-        // شاشة الفوز الأمني النهائي المحدثة لـ 50 جوهرة لأول 3 فائزين
         document.getElementById('winMessage').innerHTML = `
             <span style="color: #39ff14; font-size: 22px; font-weight: bold; text-shadow: 0 0 10px #39ff14;">👑 لقد سيطرت على العصور الفخمة! 👑</span><br><br>
             لتأكيد فوزك الساحق في التحدي وأنك من أول 3 فائزين لشحن الـ 50 جوهرة، خذ لقطة شاشة (Screenshot) كاملة الآن وأرسلها لي مباشرة للتأكيد الحتمي.<br><br>
@@ -197,27 +293,45 @@ function triggerMissionWin() {
     }
 }
 
-// --- معالجة الحسابات الفيزيائية والحركية للعبة ---
+// =========================================================================
+// 9. قلب المحرك - حسابات الفيزياء والانسيابية والاصطدامات (The Logic Core)
+// =========================================================================
+
+/**
+ * تحديث حركة الكائنات والتحقق من القوانين الفيزيائية للمحرك
+ */
 function update() {
     if (gameState !== "PLAYING") return;
 
+    globalGameTick++;
     let activeMission = missions[currentMissionIndex];
+    
+    // تحديث عداد المسافة والتقدم البصري في الـ HUD
     distanceCount += 1;
     let progress = Math.floor(distanceCount / 3);
     document.getElementById('missionObjective').innerText = `الهدف: ${progress}/${activeMission.target}m`;
 
+    // تقليل اهتزاز الشاشة التدرجي السينمائي
     if (screenShake > 0) screenShake--;
 
+    // التحقق من شرط الفوز النهائي بالمستوى
     if (progress >= activeMission.target) {
         triggerMissionWin();
         return;
     }
 
-    if (keys.left && player.x > 10) player.x -= (activeMission.speed - 1);
-    if (keys.right && player.x < canvas.width - player.width - 10) player.x += (activeMission.speed - 1);
+    // إدارة حركة القائد الجانبية المريحة
+    if (keys.left && player.x > 10) {
+        player.x -= (activeMission.speed - 1);
+    }
+    if (keys.right && player.x < canvas.width - player.width - 10) {
+        player.x += (activeMission.speed - 1);
+    }
 
+    // فيزياء الجاذبية والسقوط الحر على الأرضية الثابتة
     player.y += player.vY;
     player.vY += player.gravity;
+    
     const groundY = canvas.height - player.height - 120;
     if (player.y >= groundY) {
         player.y = groundY;
@@ -225,6 +339,7 @@ function update() {
         player.isJumping = false;
     }
 
+    // إدارة دورة تقطيع الأنيميشن للـ Sprite Sheet (تحديث إطارات الحركة)
     player.tick++;
     if (player.tick > player.animationSpeed) {
         player.tick = 0;
@@ -245,41 +360,54 @@ function update() {
         }
     }
 
+    // تدوير ومعالجة الجزيئات النيونية
     initBackgroundParticles();
-    for (let p = particles.length - 1; p >= 0; p--) {
-        particles[p].x += particles[p].speedX;
-        particles[p].y += particles[p].speedY;
-        particles[p].alpha -= 0.01;
-        if (particles[p].alpha <= 0 || particles[p].x < 0) {
-            particles.splice(p, 1);
+    updateParticles();
+
+    // تحديث مقذوفات أشعة الليزر في الفضاء الرندري
+    for (let l = lasers.length - 1; l >= 0; l--) {
+        lasers[l].x += lasers[l].speed;
+        if (lasers[l].x > canvas.width) {
+            lasers.splice(l, 1);
         }
     }
 
-    for (let l = lasers.length - 1; l >= 0; l--) {
-        lasers[l].x += lasers[l].speed;
-        if (lasers[l].x > canvas.width) lasers.splice(l, 1);
+    // 🛠️ توازن الصعوبة وتعديل الكوينشية: حماية التوليد العشوائي من العقبات المزدوجة التعجيزية
+    // توليد عقبة جديدة فقط إذا كانت المسافة الأمنية كافية للقفز أو التدمير
+    if (Math.random() < 0.014 && obstacles.length < 3) {
+        let isSafeToSpawn = true;
+        if (obstacles.length > 0) {
+            let lastObs = obstacles[obstacles.length - 1];
+            // مسافة أمان إجبارية لا تقل عن 190 بكسل بناءً على خط أحمد
+            if (canvas.width - lastObs.x < 190) {
+                isSafeToSpawn = false; 
+            }
+        }
+        
+        if (isSafeToSpawn) {
+            obstacles.push({
+                x: canvas.width,
+                y: canvas.height - 162,
+                width: 28,
+                height: 42,
+                destroyed: false
+            });
+        }
     }
 
-    if (Math.random() < 0.018 && obstacles.length < 3) {
-        obstacles.push({
-            x: canvas.width,
-            y: canvas.height - 160,
-            width: 28,
-            height: 42,
-            destroyed: false
-        });
-    }
-
+    // إدارة حلقة العقبات وتصادم أشعة الليزر واللاعب
     for (let i = obstacles.length - 1; i >= 0; i--) {
         obstacles[i].x -= activeMission.speed;
 
+        // معالجة اصطدام أشعة الليزر التطهيرية بالعقبة الحالية
         for (let l = lasers.length - 1; l >= 0; l--) {
             if (lasers[l].x < obstacles[i].x + obstacles[i].width &&
                 lasers[l].x + lasers[l].width > obstacles[i].x &&
                 lasers[l].y < obstacles[i].y + obstacles[i].height &&
                 lasers[l].y + lasers[l].height > obstacles[i].y) {
                     
-                    for(let k=0; k<12; k++) {
+                    // توليد جزيئات انفجارية نيونية عند التدمير الناجح
+                    for(let k = 0; k < 12; k++) {
                         particles.push(createParticle(obstacles[i].x, obstacles[i].y + 20, activeMission.obstacle));
                     }
                     obstacles.splice(i, 1);
@@ -290,36 +418,47 @@ function update() {
 
         if (!obstacles[i]) continue;
 
+        // معالجة تصادم القائد بالعقبة (نظام الحماية المتقدم لعلبة الاصطدام الحركي)
         if (player.x + 18 < obstacles[i].x + obstacles[i].width &&
             player.x + player.width - 18 > obstacles[i].x &&
             player.y + 8 < obstacles[i].y + obstacles[i].height &&
             player.y + player.height > obstacles[i].y) {
                 
-                screenShake = 10; 
+                screenShake = 12; // تفعيل الاهتزاز العنيف للكانفاس عند الموت السينمائي
                 alert(`سقط القائد الفخم في مهمة: ${activeMission.name}. أعد المحاولة وكثف تركيزك للفوز بالجواهر!`);
                 resetLevel();
         }
 
+        // تنظيف ومسح العقبة من المصفوفة إذا خرجت تماماً عن يسار الشاشة
         if (obstacles[i] && obstacles[i].x + obstacles[i].width < 0) {
             obstacles.splice(i, 1);
         }
     }
 }
 
-// --- دالة الرسم والـ Rendering البصري ---
+// =========================================================================
+// 10. الرندرة والمسح البصري وجرافيك الشاشة (Advanced Canvas Rendering)
+// =========================================================================
+
+/**
+ * دالة رسم جميع الكوادر والعناصر الرندرية على الكانفاس
+ */
 function draw() {
     let activeMission = missions[currentMissionIndex];
     
     ctx.save();
+    // تطبيق تأثير الاهتزاز السينمائي المطور الشدة
     if (screenShake > 0) {
         let dx = (Math.random() - 0.5) * screenShake;
         let dy = (Math.random() - 0.5) * screenShake;
         ctx.translate(dx, dy);
     }
 
+    // رسم لون خلفية العصر التاريخي الحالي
     ctx.fillStyle = activeMission.bg;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    // رسم جزيئات الغبار الفخمة مع تطبيق الشفافية المتلاشية (Alpha Blending)
     particles.forEach(p => {
         ctx.save();
         ctx.globalAlpha = p.alpha;
@@ -332,21 +471,25 @@ function draw() {
         ctx.restore();
     });
 
+    // رسم أرضية العصر الأساسية السفلى
     ctx.fillStyle = "#12121f";
     ctx.fillRect(0, canvas.height - 120, canvas.width, 120);
     
+    // رسم خط النيون الفخم الفاصل للأرضية
     ctx.shadowBlur = 18;
     ctx.shadowColor = activeMission.obstacle;
     ctx.fillStyle = activeMission.obstacle;
     ctx.fillRect(0, canvas.height - 120, canvas.width, 4);
     ctx.shadowBlur = 0; 
 
+    // رسم مقذوفات أشعة الليزر بلون النيون الناري المرعب
     ctx.fillStyle = "#ff0055";
     ctx.shadowBlur = 15;
     ctx.shadowColor = "#ff0055";
     lasers.forEach(l => ctx.fillRect(l.x, l.y, l.width, l.height));
     ctx.shadowBlur = 0;
 
+    // رسم العقبات وعربات الكارو/الحناطير التاريخية بتأثيرات ظلال متطورة
     obstacles.forEach(obs => {
         ctx.fillStyle = activeMission.obstacle;
         ctx.shadowBlur = 10;
@@ -354,10 +497,12 @@ function draw() {
         ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
         ctx.shadowBlur = 0;
         
+        // رسم خط داخلي أبيض لإعطاء طابع بصري ثلاثي الأبعاد وعالي التباين للأصابع
         ctx.fillStyle = "#ffffff";
         ctx.fillRect(obs.x + 6, obs.y, 4, obs.height);
     });
 
+    // حسابات التقطيع الدقيقة للـ Sprite Sheet بناءً على الأعمدة والصفوف المحددة
     let spriteCols = 6;
     let spriteRows = 2;
     let sWidth = spriteSheet.width / spriteCols;
@@ -365,6 +510,7 @@ function draw() {
     let sx = player.frameX * sWidth;
     let sy = player.frameY * sHeight;
 
+    // رسم القائد الفخم بإحداثيات التقطيع البصرية المحدثة
     ctx.drawImage(
         spriteSheet,
         sx, sy,
@@ -376,20 +522,28 @@ function draw() {
     ctx.restore(); 
 }
 
-// --- الحلقة اللانهائية المستقرة ---
+// =========================================================================
+// 11. الحلقة اللانهائية المستقرة وضبط الأمان الخارجي (The Core Game Loop)
+// =========================================================================
+
+/**
+ * الحلقة التكرارية الأساسية لتحديث ورسم الكوادر المتزامنة وثبات الفريمات
+ */
 function gameLoop() {
     update();
     draw();
     requestAnimationFrame(gameLoop);
 }
 
+// إطلاق الحلقة البرمجية بمجرد تحميل الصورة بالكامل لمنع أخطاء الرندرة المبكرة
 spriteSheet.onload = () => {
     gameLoop();
 };
 
-// --- حماية كود اللعبة الفخم والجدار الناري للتحدي المغلق ---
+// --- حماية كود المحرك الفخم والجدار الناري للتحدي المغلق ضد الهندسة العكسية ---
 document.addEventListener('contextmenu', event => event.preventDefault());
 document.addEventListener('keydown', (e) => {
+    // تعطيل زر الفحص F12 واختصارات لوحة تحكم المطورين لمنع العبث بالسكور ومفاتيح الفوز
     if (e.keyCode === 123 || 
         (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || 
         (e.ctrlKey && e.keyCode === 85)) {
@@ -397,3 +551,8 @@ document.addEventListener('keydown', (e) => {
         return false;
     }
 });
+
+/**
+ * 👑 END OF ENGINE LOGIC CODE BLOCK - READY FOR DEPLOYMENT ON FB-13
+ * تأكد من عمل Commit لهذا الملف بالكامل لـ GitHub لتطبيق التحديث مباشرة للمتابعين!
+ */
