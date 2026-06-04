@@ -18,9 +18,11 @@
         .start-btn { padding: 15px 40px; background: #00f3ff; color: #000; font-weight: bold; font-size: 16px; border-radius: 30px; cursor: pointer; border: none; box-shadow: 0 0 15px #00f3ff; transition: 0.2s; }
         .start-btn:active { transform: scale(0.95); box-shadow: 0 0 5px #00f3ff; }
         .hidden { display: none !important; }
+        
+        /* 🛠️ تم تعديل الارتفاع لرفع الأزرار فوق مستوى شخصية هتلر والخط الأرضي */
         #controls { 
             position: absolute; 
-            bottom: 140px; 
+            bottom: 235px; /* الارتفاع الفخم والمناسب لتجنب حجب عناصر اللعب */
             width: 94%; 
             display: flex; 
             justify-content: space-between; 
@@ -31,8 +33,8 @@
         .btn { 
             width: 70px; 
             height: 70px; 
-            background: rgba(255, 255, 255, 0.08); 
-            border: 2px solid rgba(0, 243, 255, 0.4); 
+            background: rgba(0, 0, 0, 0.6); /* تعتيم الخلفية قليلاً لبروز النيون */
+            border: 2px solid rgba(0, 243, 255, 0.5); 
             border-radius: 50%; 
             color: #00f3ff; 
             display: flex; 
@@ -40,7 +42,7 @@
             align-items: center; 
             font-weight: bold; 
             font-size: 22px; 
-            box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
+            box-shadow: 0 0 12px rgba(0, 243, 255, 0.2);
             transition: 0.1s; 
         }
         .btn:active { 
@@ -50,9 +52,9 @@
             box-shadow: 0 0 15px #00f3ff;
         }
         #btnCommand { 
-            border-color: rgba(255, 0, 85, 0.5); 
+            border-color: rgba(255, 0, 85, 0.6); 
             color: #ff0055; 
-            box-shadow: 0 0 10px rgba(255, 0, 85, 0.1);
+            box-shadow: 0 0 12px rgba(255, 0, 85, 0.2);
         }
         #btnCommand:active { 
             background: rgba(255, 0, 85, 0.25); 
