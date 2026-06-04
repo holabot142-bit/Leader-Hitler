@@ -8,7 +8,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
         body { background: #05050a; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow: hidden; color: #fff; }
         
-        /* 🚀 تم رفع شاشة اللعب (الـ Canvas) لأعلى نقطة ممكنة لتلبية طلب أحمد بالملي */
+        /* 🛠️ تم رفع شاشة اللعب (الـ Canvas) لأعلى بـ 5 حبات إضافية */
         #gameContainer { 
             position: relative; 
             width: 100vw; 
@@ -16,12 +16,12 @@
             display: flex; 
             justify-content: center; 
             align-items: flex-start; 
-            padding-top: 10px; /* تقليل المسافة لرفع اللعبة 5 حبات إضافية لأعلى */
+            padding-top: 10px; /* مسافة مرتفعة ومثالية جداً للسقف */
         }
         
         canvas { background: #0c0c14; display: block; border: 2px solid #00f3ff; box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); }
         
-        /* ضبط الـ HUD مع الارتفاع الأقصى الجديد */
+        /* ضبط موقع الـ HUD ليتناسب مع الارتفاع الجديد للشاشة */
         #hud { position: absolute; top: 20px; width: 90%; display: flex; justify-content: space-between; pointer-events: none; z-index: 5; }
         .hud-box { background: rgba(10, 10, 20, 0.85); padding: 10px 15px; border-radius: 8px; border: 1px solid #00f3ff; font-weight: bold; font-size: 14px; text-shadow: 0 0 5px #00f3ff; }
         #missionObjective { color: #ff0055; border-color: #ff0055; text-shadow: 0 0 5px #ff0055; }
@@ -33,10 +33,10 @@
         .start-btn:active { transform: scale(0.95); box-shadow: 0 0 5px #00f3ff; }
         .hidden { display: none !important; }
         
-        /* 🎮 ضبط مكان الأزرار السفلي لتكون مريحة جداً ومثالية للعب */
+        /* 🎮 المكان الاستراتيجي والمثالي للأزرار لتوفير أقصى راحة وحرية حركة أثناء اللعب */
         #controls { 
             position: absolute; 
-            bottom: 45px; 
+            bottom: 35px; /* النقطة السحرية لراحة إبهام اللاعب */
             width: 94%; 
             display: flex; 
             justify-content: space-between; 
@@ -47,7 +47,7 @@
         .btn { 
             width: 70px; 
             height: 70px; 
-            background: rgba(0, 0, 0, 0.6); 
+            background: rgba(0, 0, 0, 0.65); 
             border: 2px solid rgba(0, 243, 255, 0.5); 
             border-radius: 50%; 
             color: #00f3ff; 
@@ -60,7 +60,7 @@
             transition: 0.1s; 
         }
         .btn:active { 
-            background: rgba(0, 243, 255, 0.25); 
+            background: rgba(0, 243, 255, 0.3); 
             border-color: #00f3ff; 
             transform: scale(0.88); 
             box-shadow: 0 0 15px #00f3ff;
@@ -71,7 +71,7 @@
             box-shadow: 0 0 12px rgba(255, 0, 85, 0.2);
         }
         #btnCommand:active { 
-            background: rgba(255, 0, 85, 0.25); 
+            background: rgba(255, 0, 85, 0.3); 
             border-color: #ff0055; 
             box-shadow: 0 0 15px #ff0055;
         }
